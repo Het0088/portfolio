@@ -123,37 +123,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const backToTopBtn = document.querySelector('.back-to-top');
   const contactForm = document.querySelector('.contact-form');
 
-  // Project Preview Modal
-  const previewModal = document.querySelector('.preview-modal');
-  const previewTitle = document.querySelector('.preview-title');
-  const previewFrame = document.querySelector('.preview-frame');
-  const previewTags = document.querySelector('.preview-tags');
-  const previewLink = document.querySelector('.preview-link');
-  const previewGithub = document.querySelector('.preview-github');
-  const closePreview = document.querySelector('.close-preview');
+  // Removed preview modal elements
 
   // Animation Elements
   let animationFrameId;
   let ticking = false;
 
     // Project URLs for preview (with case variations for safety)
-  const projectUrls = {
-    'SmartScope': '../smartscope/index.html',
-    'Smartscope': '../smartscope/index.html',
-    'smartscope': '../smartscope/index.html',
-    '3D Car Showcase': '../car-future-3d/index.html', 
-    '3D Pepsi Store Management': '../Store Management/app.py',
-    'Super Website': '../Super Website/website/index.html',
-    'Pet Adoption Website': '../Pet Adoption Website/index.html',
-    'E-commerce Website': '../e-commerce-website/frontend/public/index.html',
-    'Timetable Manager': '../timetable-manager/frontend/public/index.html',
-    'School Management': '../school-management/frontend/public/index.html',
-    'Automation Dashboard': '../automation-dashboard/index.html',
-    'Freelancer Platform': '../freelancer-business-platform/src/app/page.tsx',
-    'Animated Website': '../animated-website/src/app/page.tsx',
-    'Chatbot': '../CHATBOT/src/app/page.tsx',
-    'Coca Cola Website': '../Coca-cola/Cacola/index.html'
-  };
+  // Removed live demo URL mappings
 
   // Project GitHub URLs (with case variations for safety)
   const projectGithubUrls = {
@@ -352,37 +329,19 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`  Link ${linkIndex + 1}: href="${link.href}", target="${link.target}"`);
       });
       
-      if (projectTitle && projectLinks.length >= 2) {
-        const liveLink = projectLinks[0];  // First link (live demo)
-        const githubLink = projectLinks[1]; // Second link (GitHub)
-        
-        // Update live demo link
-        if (projectUrls[projectTitle]) {
-          liveLink.href = projectUrls[projectTitle];
-          liveLink.target = '_blank';
-          liveLink.rel = 'noopener noreferrer';
-          
-          console.log(`🔗 UPDATED Live Demo: ${projectTitle} → ${liveLink.href}`);
-        } else {
-          liveLink.style.display = 'none';
-          console.log(`❌ No live demo URL for: ${projectTitle}`);
-        }
-        
-        // Update GitHub link
+      if (projectTitle && projectLinks.length >= 1) {
+        const githubLink = projectLinks[0]; // Only GitHub remains
+
         if (projectGithubUrls[projectTitle]) {
           githubLink.href = projectGithubUrls[projectTitle];
           githubLink.target = '_blank';
           githubLink.rel = 'noopener noreferrer';
-          
           console.log(`✅ UPDATED GitHub: ${projectTitle} → ${githubLink.href}`);
-          
-          // Force set onclick as backup
           githubLink.onclick = function(e) {
             console.log(`🖱️ GitHub button clicked for ${projectTitle}`);
             window.open(projectGithubUrls[projectTitle], '_blank');
             return false;
           };
-          
         } else {
           console.log(`❌ No GitHub URL found for: ${projectTitle}`);
         }
@@ -391,35 +350,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
     
-    console.log(`📊 Project URLs available:`, Object.keys(projectUrls));
     console.log(`📊 GitHub URLs available:`, Object.keys(projectGithubUrls));
     
-    // ===== Direct SmartScope Fix =====
-    console.log('🔧 Applying direct SmartScope link fix...');
-    const allCards = document.querySelectorAll('.project-card');
-    allCards.forEach((card, index) => {
-      const title = card.querySelector('h4')?.textContent?.trim();
-      if (title && title.toLowerCase().includes('smartscope')) {
-        console.log(`🎯 Found SmartScope card: "${title}"`);
-        const links = card.querySelectorAll('.project-links a');
-        if (links.length >= 2) {
-          // Force set the GitHub link (second link)
-          links[1].href = 'https://github.com/Het0088/Smartscope';
-          links[1].target = '_blank';
-          links[1].rel = 'noopener noreferrer';
-          
-          // Force set the live demo link (first link) 
-          links[0].href = '../smartscope/index.html';
-          links[0].target = '_blank';
-          links[0].rel = 'noopener noreferrer';
-          
-          console.log(`✅ FORCED SmartScope links:`, {
-            liveDemo: links[0].href,
-            github: links[1].href
-          });
-        }
-      }
-    });
+    // Removed SmartScope direct live demo fix
   }
 
   // ===== Manual Test Function (for debugging) =====
@@ -438,9 +371,9 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`  Link ${i + 1}: onclick=`, link.onclick);
       });
       
-      if (links[1]) {
+      if (links[0]) {
         console.log('🔗 Manually clicking GitHub link...');
-        links[1].click();
+        links[0].click();
       }
     } else {
       console.log('❌ SmartScope card not found!');
@@ -1108,57 +1041,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('✅ Page fully visible and loaded');
   });
 
-  // Add click event to project cards
-  document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('click', (e) => {
-      // Don't open preview if clicking on links or their parent elements
-      if (e.target.closest('a') || e.target.closest('.project-links')) return;
-      
-      const projectName = card.querySelector('h4').textContent;
-      const projectTags = card.querySelectorAll('.project-tags span');
-      
-      // Update preview modal content
-      previewTitle.textContent = projectName;
-      previewFrame.src = projectUrls[projectName] || '';
-      previewLink.href = projectUrls[projectName] || '#';
-      previewGithub.href = projectGithubUrls[projectName] || '#';
-      
-      // Update tags
-      previewTags.innerHTML = '';
-      projectTags.forEach(tag => {
-        const span = document.createElement('span');
-        span.textContent = tag.textContent;
-        previewTags.appendChild(span);
-      });
-      
-      // Show modal
-      previewModal.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    });
-  });
+  // Removed: click-to-open live preview modal
 
-  // Close preview modal
-  closePreview.addEventListener('click', () => {
-    previewModal.classList.remove('active');
-    document.body.style.overflow = '';
-    previewFrame.src = ''; // Clear iframe source
-  });
-
-  // Close preview when clicking outside
-  previewModal.addEventListener('click', (e) => {
-    if (e.target === previewModal) {
-      previewModal.classList.remove('active');
-      document.body.style.overflow = '';
-      previewFrame.src = ''; // Clear iframe source
-    }
-  });
-
-  // Close preview with Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && previewModal.classList.contains('active')) {
-      previewModal.classList.remove('active');
-      document.body.style.overflow = '';
-      previewFrame.src = ''; // Clear iframe source
-    }
-  });
+  // Removed: preview modal close handlers
 }); 

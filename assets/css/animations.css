@@ -341,26 +341,7 @@ section.animated::before {
   transform: translateY(0);
 }
 
-/* ===== Modal Animations ===== */
-.preview-modal {
-  transition: all 0.4s var(--ease-out-quart);
-  transform: scale(0.9);
-  opacity: 0;
-}
 
-.preview-modal.active {
-  transform: scale(1);
-  opacity: 1;
-}
-
-.preview-modal .modal-content {
-  transform: translateY(40px) scale(0.95);
-  transition: all 0.4s var(--ease-out-quart) 0.1s;
-}
-
-.preview-modal.active .modal-content {
-  transform: translateY(0) scale(1);
-}
 
 /* ===== Loading Animations ===== */
 .loading-shimmer {
