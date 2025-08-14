@@ -137,17 +137,22 @@ document.addEventListener('DOMContentLoaded', () => {
     'SmartScope': 'https://github.com/Het0088/Smartscope',
     'Smartscope': 'https://github.com/Het0088/Smartscope',
     'smartscope': 'https://github.com/Het0088/Smartscope',
-    '3D Car Showcase': 'https://github.com/Het0088/3D-Car-Showcase',
-    '3D Pepsi Store Management': 'https://github.com/Het0088/Store-Management',
+    '3D Car Showcase': 'https://github.com/Het0088/Nexus-Three.Js',
+    'Nexus - A 3D Integrated Website': 'https://github.com/Het0088/Nexus-Three.Js',
+    '3D Pepsi Store Management': 'https://github.com/Het0088/Soft-Drink',
+    '3D Pepsi Store - A 3D Integrated Website': 'https://github.com/Het0088/Soft-Drink',
     'Super Website': 'https://github.com/Het0088/Super-Website',
-    'Pet Adoption Website': 'https://github.com/Het0088/Pet-Adoption-Website',
+    'Pet Adoption Website': 'https://github.com/Het0088/Pet-Adoption',
     'E-commerce Website': 'https://github.com/Het0088/E-commerce-Website',
-    'Timetable Manager': 'https://github.com/Het0088/Timetable-Manager',
-    'School Management': 'https://github.com/Het0088/School-Management',
-    'Automation Dashboard': 'https://github.com/Het0088/Automation-Dashboard',
+    'Timetable Manager': 'https://github.com/Het0088/Time-Table-Manager',
+    'School Management System': 'https://github.com/Het0088/School-Management-System',
+    'Automation Dashboard': 'https://github.com/Het0088/Home-Automation-Dashboard',
     'Freelancer Platform': 'https://github.com/Het0088/Freelancer-Platform',
-    'Animated Website': 'https://github.com/Het0088/Animated-Website',
+    'Freelancer Business Platform': 'https://github.com/Het0088/Freelancer-Platform',
+    'Animated Website': 'https://github.com/Het0088/Transitioned-Webpage',
     'Chatbot': 'https://github.com/Het0088/Chatbot',
+    'AI Chatbot': 'https://github.com/Het0088/Chatbot',
+    'Store Management System': 'https://github.com/Het0088/Store-Management',
     'Coca Cola Website': 'https://github.com/Het0088/Coca-Cola-Website'
   };
 
@@ -320,7 +325,32 @@ document.addEventListener('DOMContentLoaded', () => {
     
     projectCards.forEach((card, index) => {
       const projectTitle = card.querySelector('h4')?.textContent;
-      const projectLinks = card.querySelectorAll('.project-links a');
+      // Ensure overlay and link container exist
+      let overlay = card.querySelector('.overlay');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'overlay';
+        const projectImage = card.querySelector('.project-image');
+        if (projectImage) {
+          projectImage.appendChild(overlay);
+        }
+      }
+
+      let linksWrap = card.querySelector('.project-links');
+      if (!linksWrap) {
+        linksWrap = document.createElement('div');
+        linksWrap.className = 'project-links';
+        overlay.appendChild(linksWrap);
+      }
+
+      // Ensure a single GitHub icon link exists
+      let githubLink = linksWrap.querySelector('a');
+      if (!githubLink) {
+        githubLink = document.createElement('a');
+        githubLink.innerHTML = '<i class="fab fa-github"></i>';
+        linksWrap.appendChild(githubLink);
+      }
+      const projectLinks = linksWrap.querySelectorAll('a');
       
       console.log(`📋 Card ${index + 1}: "${projectTitle}", Links found: ${projectLinks.length}`);
       
@@ -330,14 +360,14 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       
       if (projectTitle && projectLinks.length >= 1) {
-        const githubLink = projectLinks[0]; // Only GitHub remains
+        const githubLinkEl = projectLinks[0]; // Only GitHub remains
 
         if (projectGithubUrls[projectTitle]) {
-          githubLink.href = projectGithubUrls[projectTitle];
-          githubLink.target = '_blank';
-          githubLink.rel = 'noopener noreferrer';
-          console.log(`✅ UPDATED GitHub: ${projectTitle} → ${githubLink.href}`);
-          githubLink.onclick = function(e) {
+          githubLinkEl.href = projectGithubUrls[projectTitle];
+          githubLinkEl.target = '_blank';
+          githubLinkEl.rel = 'noopener noreferrer';
+          console.log(`✅ UPDATED GitHub: ${projectTitle} → ${githubLinkEl.href}`);
+          githubLinkEl.onclick = function(e) {
             console.log(`🖱️ GitHub button clicked for ${projectTitle}`);
             window.open(projectGithubUrls[projectTitle], '_blank');
             return false;

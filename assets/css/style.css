@@ -797,6 +797,9 @@ nav {
   gap: 20px;
 }
 
+/* Remove icon buttons from all project cards */
+
+
 .project-links a {
   display: flex;
   justify-content: center;
@@ -815,6 +818,9 @@ nav {
   color: white;
   transform: translateY(-3px);
 }
+
+/* Completely hide overlay and action icons on project cards */
+
 
 .project-info {
   padding: 25px;
