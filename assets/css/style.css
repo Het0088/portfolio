@@ -1128,7 +1128,7 @@ footer {
 @media (max-width: 100px) {
   header {
     padding: 2px 0;
-    min-height: 40px;
+    min-height: 20px;
   }
   
   .logo a {
