@@ -185,15 +185,28 @@ section {
    Header & Navigation
    ========================================================================== */
 header {
-  position: fixed;
+  position: fixed;        /* keeps it locked at the top */
   top: 0;
   left: 0;
-  width: 100%;
-  z-index: 1000;
-  background-color: var(--nav-bg);
-  transition: background-color 0.3s ease, padding 0.3s ease;
-  padding: 20px 0;
+  width: 100%;            /* span full width */
+  height: 60px;           /* reduce header height (adjust as needed) */
+  padding: 0 20px;        /* left & right spacing */
+  display: flex;
+  align-items: center;    /* vertically center content */
+  justify-content: space-between; /* or your theme color */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* subtle shadow */
+  z-index: 1000;          /* stays above content */
 }
+
+body {
+  padding-top: 60px; /* prevents content hiding behind the fixed header */
+}
+
+header h1, header nav a, header button {
+  font-size: 16px; /* scale text down */
+  line-height: 1;
+}
+
 
 header.scrolled {
   background-color: var(--nav-bg-scrolled);
