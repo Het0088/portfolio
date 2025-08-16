@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'Nexus - A 3D Integrated Website': 'https://github.com/Het0088/Nexus-Three.Js',
     '3D Pepsi Store Management': 'https://github.com/Het0088/Soft-Drink',
     '3D Pepsi Store - A 3D Integrated Website': 'https://github.com/Het0088/Soft-Drink',
-    'Super Website': 'https://github.com/Het0088/Super-Website',
+    'Password Strength Checker': 'https://github.com/Het0088/Password-Strength-Checker',
     'Pet Adoption Website': 'https://github.com/Het0088/Pet-Adoption',
     'E-commerce Website': 'https://github.com/Het0088/E-commerce-Website',
     'Timetable Manager': 'https://github.com/Het0088/Time-Table-Manager',
