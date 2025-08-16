@@ -153,7 +153,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'Chatbot': 'https://github.com/Het0088/Chatbot',
     'AI Chatbot': 'https://github.com/Het0088/Chatbot',
     'Store Management System': 'https://github.com/Het0088/Store-Management',
-    'Coca Cola Website': 'https://github.com/Het0088/Coca-Cola-Website'
+    'Coca Cola Website': 'https://github.com/Het0088/Coca-Cola-Website',
+    'Voice Recognition AI': 'https://github.com/Het0088/AI-Voice-Recognition-Bot'
   };
 
   // ===== Enhanced Scroll Progress Indicator =====
