@@ -134,12 +134,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Project GitHub URLs (with case variations for safety)
   const projectGithubUrls = {
-    'SmartScope': 'https://github.com/Het0088/Smartscope',
-    'Smartscope': 'https://github.com/Het0088/Smartscope',
-    'smartscope': 'https://github.com/Het0088/Smartscope',
-    '3D Car Showcase': 'https://github.com/Het0088/Nexus-Three.Js',
-    'Nexus - A 3D Integrated Website': 'https://github.com/Het0088/Nexus-Three.Js',
-    'Soft Drink - A Three.JS Project': 'https://github.com/Het0088/Soft-Drink',
+    'SmartScope - AI Research Assistant': 'https://github.com/Het0088/Smartscope',
+    'Nexus - A Three.JS Project': 'https://github.com/Het0088/Nexus-Three.Js',
     'Soft Drink - A Three.JS Project': 'https://github.com/Het0088/Soft-Drink',
     'Password Strength Checker': 'https://github.com/Het0088/Password-Strength-Checker',
     'Pet Adoption Website': 'https://github.com/Het0088/Pet-Adoption',
