@@ -494,7 +494,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ===== Mobile Menu Toggle =====
   function toggleMobileMenu() {
-    navLinks.classList.toggle('active');
+    const isActive = navLinks.classList.toggle('active');
+    // compute header bottom and place the dropdown just below it to avoid overlap
+    try {
+      const offset = 18; // gap between header bottom and dropdown
+      if (isActive) {
+        // compute a robust top based on layout height (not transformed position)
+        const topPx = window.scrollY + (header ? header.offsetHeight : 0) + offset;
+        // force inline positioning and visibility so CSS transforms don't hide it
+        navLinks.style.position = 'fixed';
+        navLinks.style.left = '50%';
+        navLinks.style.top = `${topPx}px`;
+        navLinks.style.transform = 'translate(-50%, 0)';
+        navLinks.style.opacity = '1';
+        navLinks.style.visibility = 'visible';
+      } else {
+        // animate up a bit then clear inline styles
+        navLinks.style.transform = 'translate(-50%, -120%)';
+        navLinks.style.opacity = '0';
+        navLinks.style.visibility = 'hidden';
+        setTimeout(() => {
+          navLinks.style.top = '';
+          navLinks.style.left = '';
+          navLinks.style.position = '';
+          navLinks.style.transform = '';
+          navLinks.style.opacity = '';
+          navLinks.style.visibility = '';
+        }, 320);
+      }
+    } catch (e) {
+      // ignore if header/navLinks missing
+    }
     
     // Change the hamburger icon to X
     const bars = document.querySelectorAll('.bar');
@@ -966,6 +996,32 @@ document.addEventListener('DOMContentLoaded', () => {
   // Add smooth scrolling to all navigation links
   document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', smoothScroll);
+  });
+
+  // ===== Close mobile menu on outside click or Escape =====
+  function closeMobileMenu() {
+    if (!navLinks) return;
+    if (navLinks.classList.contains('active')) {
+      // reuse the toggle so the hamburger animation stays in sync
+      toggleMobileMenu();
+    }
+  }
+
+  // Click outside to close
+  document.addEventListener('click', (e) => {
+    if (!navLinks || !mobileMenuBtn) return;
+    const target = e.target;
+    // If menu is open and the click is outside the navLinks and not on the menu button or theme switcher, close it
+    if (navLinks.classList.contains('active') && !navLinks.contains(target) && !mobileMenuBtn.contains(target) && !(themeSwitcher && themeSwitcher.contains(target))) {
+      closeMobileMenu();
+    }
+  }, { passive: true });
+
+  // Escape key to close
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' || e.key === 'Esc') {
+      closeMobileMenu();
+    }
   });
 
   // Listen for changes to color scheme preference

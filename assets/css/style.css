@@ -247,31 +247,36 @@ nav {
   }
   /* place dropdown just under the header and make hide/slide distance moderate */
   .nav-links {
-    position: fixed;
-    top: 92px !important; /* lower so menu sits under the header */
-    left: 50%;
-    transform: translate(-50%, -8px);
-    opacity: 0;
-    visibility: hidden;
-    width: calc(100% - 36px);
-    max-width: 380px;
-    background: rgba(10,10,10,0.9);
-    backdrop-filter: blur(4px);
-    padding: 10px 12px;
-    border-radius: 10px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.5);
-    transition: transform 280ms cubic-bezier(.2,.9,.2,1), opacity 220ms ease, visibility 220ms ease;
-    z-index: 1200;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    align-items: center;
+  top: 72px !important; /* moved lower so first item isn't flush with header */
+  left: 50%;
+  transform: translate(-50%, -120%); /* hidden just above header, centered */
+  padding-top: 8px; /* breathing room from top */
+  transition: transform 0.28s ease, opacity 0.22s ease, visibility 0.22s ease;
+    z-index: 1000;
   }
 
   .nav-links.active {
-    transform: translate(-50%, 0);
+    transform: translate(-50%, 6px); /* drop slightly below header into view, centered */
     opacity: 1;
     visibility: visible;
+  }
+
+  /* Center menu items inside the dropdown on small screens */
+  .nav-links a {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 10px 12px;
+    font-weight: 600;
+    color: var(--text-color);
+    opacity: 1; /* ensure visible after transition */
+  }
+
+  .nav-links a::after {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 8px;
+    width: 60%;
   }
 
   /* put theme switcher next to the hamburger on mobile */
@@ -1216,15 +1221,15 @@ footer {
   
   .nav-links {
     position: fixed;
-    top: 92px;
+    top: 80px;
     left: 50%;
     transform: translate(-50%, -8px);
     opacity: 0;
     visibility: hidden;
     width: calc(100% - 36px);
     max-width: 420px;
-    background: rgba(10,10,10,0.92);
-    backdrop-filter: blur(5px);
+    background: rgba(10,10,10,0.78);
+    backdrop-filter: blur(6px) saturate(120%);
     padding: 10px 12px;
     border-radius: 12px;
     box-shadow: 0 12px 30px rgba(0,0,0,0.6);
@@ -1238,9 +1243,26 @@ footer {
   }
 
   .nav-links.active {
-    transform: translate(-50%, 0);
+    transform: translate(-50%, 12px);
     opacity: 1;
     visibility: visible;
+  }
+
+  /* Center menu items for the wider mobile breakpoint */
+  .nav-links a {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 10px 14px;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  .nav-links a::after {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 8px;
+    width: 60%;
   }
   
   .mobile-menu-btn {
