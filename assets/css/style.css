@@ -185,28 +185,15 @@ section {
    Header & Navigation
    ========================================================================== */
 header {
-  position: fixed;        /* keeps it locked at the top */
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;            /* span full width */
-  height: 60px;           /* reduce header height (adjust as needed) */
-  padding: 0 20px;        /* left & right spacing */
-  display: flex;
-  align-items: center;    /* vertically center content */
-  justify-content: space-between; /* or your theme color */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* subtle shadow */
-  z-index: 1000;          /* stays above content */
+  width: 100%;
+  z-index: 10;
+  background-color: var(--nav-bg);
+  transition: background-color 0.3s ease, padding 0.3s ease;
+  padding: 20px 0;
 }
-
-body {
-  padding-top: 60px; /* prevents content hiding behind the fixed header */
-}
-
-header h1, header nav a, header button {
-  font-size: 16px; /* scale text down */
-  line-height: 1;
-}
-
 
 header.scrolled {
   background-color: var(--nav-bg-scrolled);
@@ -218,6 +205,63 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+/* --- Ultra-compact header for mobile --- */
+@media (max-width: 600px) {
+  header {
+    min-height: 28px !important;
+    max-height: 44px;
+    padding: 0 0 !important;
+    background: var(--nav-bg-scrolled);
+    box-shadow: 0 2px 8px var(--shadow-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo a {
+    font-size: 0.85rem !important;
+    padding: 0 4px;
+    letter-spacing: 0.2px;
+    font-weight: 700;
+  }
+  nav {
+    min-height: 28px;
+    height: 44px;
+    align-items: center;
+  }
+  .theme-switcher {
+    font-size: 0.7rem !important;
+    margin-left: 8px;
+    padding: 0;
+  }
+  .mobile-menu-btn {
+    padding: 0 2px;
+  }
+  .mobile-menu-btn .bar {
+  width: 14px;
+  height: 2px;
+  margin: 3px 0; /* increased vertical gap */
+  display: block;
+  border-radius: 2px;
+  }
+  /* place dropdown just under the header and make hide/slide distance moderate */
+  .nav-links {
+    top: 56px !important;
+    transform: translateY(-110%); /* hidden just above header, not far off-screen */
+    transition: transform 0.28s ease;
+    z-index: 1000;
+  }
+
+  /* put theme switcher next to the hamburger on mobile */
+  .theme-switcher {
+    order: 2;
+    margin-left: 6px;
+    margin-right: 6px;
+  }
+  .mobile-menu-btn {
+    order: 3;
+  }
 }
 
 .logo a {
@@ -1138,25 +1182,26 @@ footer {
   }
 }
 
-@media (max-width: 100px) {
+@media (max-width: 768px) {
   header {
-    padding: 2px 0;
-    min-height: 20px;
+    padding: 5px 0;
+    min-height: 45px;
   }
   
   .logo a {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    line-height: 1;
   }
   
   .nav-links {
     position: fixed;
-    top: 60px;
+  top: 56px;
     left: 0;
     width: 100%;
     background-color: var(--bg-color);
-    padding: 20px;
+    padding: 15px;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
     box-shadow: 0 10px 20px var(--shadow-color);
     transform: translateY(-150%);
     transition: transform 0.3s ease;
@@ -1169,10 +1214,26 @@ footer {
   
   .mobile-menu-btn {
     display: block;
+  padding: 6px 8px; /* give some hit area */
+  margin-right: 6px;
+  }
+  
+  .mobile-menu-btn .bar {
+  width: 20px;
+  height: 2px;
+  margin: 4px 0; /* slightly larger gap on this breakpoint */
+  border-radius: 2px;
   }
   
   .theme-switcher {
-    font-size: 1rem;
+  font-size: 0.9rem;
+  padding: 3px;
+  order: 2;
+  margin-right: 6px;
+  }
+  
+  .hero {
+    padding-top: 60px;
   }
   
   .hero .container {
@@ -1218,6 +1279,35 @@ footer {
 }
 
 @media (max-width: 576px) {
+  header {
+    padding: 3px 0;
+    min-height: 40px;
+  }
+  
+  .logo a {
+    font-size: 1rem;
+    line-height: 1;
+  }
+  
+  .theme-switcher {
+    font-size: 0.8rem;
+    padding: 2px;
+  }
+  
+  .mobile-menu-btn {
+    padding: 2px;
+  }
+  
+  .mobile-menu-btn .bar {
+    width: 16px;
+    height: 1.5px;
+    margin: 1.5px 0;
+  }
+  
+  .hero {
+    padding-top: 50px;
+  }
+  
   .hero h1 {
     font-size: 2.5rem;
   }
@@ -1265,6 +1355,88 @@ footer {
   .footer-links ul {
     flex-direction: column;
     gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    padding: 2px 0;
+    min-height: 35px;
+  }
+  
+  .logo a {
+    font-size: 0.9rem;
+    line-height: 1;
+  }
+  
+  .theme-switcher {
+    font-size: 0.7rem;
+    padding: 1px;
+  }
+  
+  .mobile-menu-btn .bar {
+    width: 14px;
+    height: 1px;
+    margin: 1px 0;
+  }
+  
+  .hero {
+    padding-top: 40px;
+  }
+  
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+  
+  .hero h2 {
+    font-size: 1.3rem;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 360px) {
+  header {
+    padding: 1px 0;
+    min-height: 30px;
+  }
+  
+  .logo a {
+    font-size: 0.8rem;
+    line-height: 1;
+  }
+  
+  .theme-switcher {
+    font-size: 0.6rem;
+    padding: 0;
+  }
+  
+  .mobile-menu-btn .bar {
+    width: 12px;
+    height: 1px;
+    margin: 0.5px 0;
+  }
+  
+  .hero {
+    padding-top: 35px;
+  }
+  
+  .container {
+    padding: 0 10px;
+  }
+  
+  .hero h1 {
+    font-size: 2rem;
+  }
+  
+  .hero h2 {
+    font-size: 1.2rem;
+  }
+  
+  .section-title {
+    font-size: 1.6rem;
   }
 }
 
