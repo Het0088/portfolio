@@ -41,6 +41,16 @@ document.addEventListener('DOMContentLoaded', () => {
   document.body.style.visibility = 'visible';
   document.body.style.background = '#0a0a0a';
   
+  // Initialize typewriter effect immediately and with fallback
+  console.log('🖊 Starting typewriter effect...');
+  initTypewriter();
+  
+  // Retry after a delay in case of timing issues
+  setTimeout(() => {
+    console.log('🔄 Retrying typewriter initialization...');
+    initTypewriter();
+  }, 1000);
+
   // Ensure all content is visible immediately
   const heroSection = document.querySelector('.hero, #hero');
   if (heroSection) {
@@ -835,46 +845,68 @@ document.addEventListener('DOMContentLoaded', () => {
   function initTypewriter() {
     const typeTarget = document.querySelector('.typewriter');
     
-    if (typeTarget) {
-      let roles;
-      try {
-        roles = JSON.parse(typeTarget.getAttribute('data-roles'));
-      } catch (e) {
-        roles = ["Full Stack Developer", "Software Engineer", "Windows App Developer"];
-      }
-      
-      let roleIndex = 0;
-      let charIndex = 0;
-      let isDeleting = false;
-      let typeDelay = 100;
-      
-      function type() {
-        const currentRole = roles[roleIndex];
-        
-        if (isDeleting) {
-          typeTarget.textContent = currentRole.substring(0, charIndex - 1);
-          charIndex--;
-          typeDelay = 50;
-        } else {
-          typeTarget.textContent = currentRole.substring(0, charIndex + 1);
-          charIndex++;
-          typeDelay = 200;
-        }
-        
-        if (!isDeleting && charIndex === currentRole.length) {
-          isDeleting = true;
-          typeDelay = 1000; // Pause before deleting
-        } else if (isDeleting && charIndex === 0) {
-          isDeleting = false;
-          roleIndex = (roleIndex + 1) % roles.length;
-          typeDelay = 500; // Pause before typing new role
-        }
-        
-        setTimeout(type, typeDelay);
-      }
-      
-      type();
+    if (!typeTarget) {
+      console.warn('Typewriter target not found');
+      return;
     }
+
+    // Clear any existing animation
+    if (window._typewriterTimer) {
+      clearTimeout(window._typewriterTimer);
+      window._typewriterTimer = null;
+    }
+
+    let roles;
+    try {
+      roles = JSON.parse(typeTarget.getAttribute('data-roles'));
+      if (!Array.isArray(roles) || roles.length === 0) {
+        throw new Error('Invalid roles data');
+      }
+    } catch (e) {
+      console.warn('Using fallback roles due to:', e.message);
+      roles = ["Full Stack Developer", "Software Engineer", "Web Developer"];
+    }
+
+    let roleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    let cursorVisible = true;
+
+    // Setup cursor blink
+    function toggleCursor() {
+      cursorVisible = !cursorVisible;
+      typeTarget.style.borderRight = cursorVisible ? '0.15em solid' : 'none';
+    }
+    const cursorInterval = setInterval(toggleCursor, 530);
+    window._cursorInterval = cursorInterval;
+
+    function type() {
+      const currentRole = roles[roleIndex];
+      typeTarget.textContent = currentRole.substring(0, charIndex);
+
+      if (isDeleting) {
+        charIndex--;
+      } else {
+        charIndex++;
+      }
+
+      let delay = isDeleting ? 80 : 120;
+
+      if (!isDeleting && charIndex >= currentRole.length) {
+        // Pause at end of word
+        delay = 2000;
+        isDeleting = true;
+      } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        roleIndex = (roleIndex + 1) % roles.length;
+        delay = 500;
+      }
+
+      window._typewriterTimer = setTimeout(type, delay);
+    }
+
+    // Start typing
+    window._typewriterTimer = setTimeout(type, 1000);
   }
 
   // ===== Initialize Advanced Animations =====
@@ -1043,7 +1075,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize everything
   checkThemePreference();
-  initTypewriter();
   initAdvancedAnimations();
   
   // Initialize project links immediately

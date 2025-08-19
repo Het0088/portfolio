@@ -11,6 +11,14 @@ body {
   background: var(--bg-color, #0a0a0a) !important;
 }
 
+/* Typewriter cursor effect */
+.typewriter {
+  border-right: 0.15em solid transparent;
+  white-space: nowrap;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
 /* Ensure hero section is always visible */
 .hero {
   opacity: 1 !important;
