@@ -553,11 +553,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (themeSwitcher.querySelector('i').classList.contains('fa-moon')) {
       themeSwitcher.querySelector('i').classList.remove('fa-moon');
       themeSwitcher.querySelector('i').classList.add('fa-sun');
-      themeSwitcher.style.transform = 'rotate(360deg)';
+      themeSwitcher.classList.add('rotated');
     } else {
       themeSwitcher.querySelector('i').classList.remove('fa-sun');
       themeSwitcher.querySelector('i').classList.add('fa-moon');
-      themeSwitcher.style.transform = 'rotate(0deg)';
+      themeSwitcher.classList.remove('rotated');
     }
     
     // Save user preference to localStorage

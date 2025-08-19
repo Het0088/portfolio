@@ -231,12 +231,16 @@ nav {
     align-items: center;
   }
   .theme-switcher {
-    font-size: 0.7rem !important;
-    margin-left: 8px;
-    padding: 0;
+  font-size: 0.7rem !important;
+  margin-left: 8px;
+  padding: 0;
+  /* nudge slightly lower so it sits beside the menu bars */
+  transform: translateY(6px);
+  transition: transform 0.18s ease;
   }
   .mobile-menu-btn {
-    padding: 0 2px;
+  padding: 0 2px;
+  align-self: center;
   }
   .mobile-menu-btn .bar {
   width: 14px;
@@ -280,13 +284,17 @@ nav {
   }
 
   /* put theme switcher next to the hamburger on mobile */
-  .theme-switcher {
-    order: 2;
-    margin-left: 6px;
-    margin-right: 6px;
-  }
+  /* place menu button first, theme switcher to its right */
   .mobile-menu-btn {
+    order: 2;
+    margin-right: 6px;
+    margin-top: -50px;
+  }
+
+  .theme-switcher {
     order: 3;
+    margin-left: 6px;
+    margin-top: 10px;
   }
 }
 
@@ -332,25 +340,39 @@ nav {
   cursor: pointer;
   font-size: 1.2rem;
   margin-left: 20px;
-  transition: var(--transition);
+  /* use variable for vertical translate to keep JS-safe */
+  --ts-translate: 0px;
+  transform: translateY(var(--ts-translate));
+  transition: transform 0.36s ease;
   color: var(--text-color);
 }
 
 .theme-switcher:hover {
   color: var(--primary-color);
-  transform: rotate(20deg);
+}
+
+/* rotate only the inner icon when toggled; keep translateY intact */
+.theme-switcher.rotated i {
+  transform: rotate(360deg);
+  transition: transform 0.48s cubic-bezier(.2,.9,.2,1);
 }
 
 .mobile-menu-btn {
   display: none;
   cursor: pointer;
+  /* ensure inner bars are centered when shown */
+  align-items: center;
+  justify-content: center;
+  flex-direction: column; /* stack bars vertically */
 }
 
-.bar {
-  width: 25px;
+.bar,
+.mobile-menu-btn .bar {
+  /* slightly larger default hamburger bars */
+  width: 28px;
   height: 3px;
   background-color: var(--text-color);
-  margin: 5px 0;
+  margin: 4px 0;
   transition: var(--transition);
   border-radius: 3px;
 }
@@ -1266,16 +1288,20 @@ footer {
   }
   
   .mobile-menu-btn {
-    display: block;
-  padding: 6px 8px; /* give some hit area */
-  margin-right: 6px;
+  display: block;
+  padding: 10px; /* larger hit area */
+  margin-right: 10px;
+  display: inline-flex; /* ensure centering of bars */
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   }
   
   .mobile-menu-btn .bar {
-  width: 20px;
-  height: 2px;
-  margin: 4px 0; /* slightly larger gap on this breakpoint */
-  border-radius: 2px;
+  width: 34px; /* wider bars on mobile */
+  height: 3px;
+  margin: 5px 0; /* comfortable vertical spacing */
+  border-radius: 3px;
   }
   
   .theme-switcher {
@@ -1348,13 +1374,14 @@ footer {
   }
   
   .mobile-menu-btn {
-    padding: 2px;
+  padding: 6px;
+  flex-direction: column;
   }
   
   .mobile-menu-btn .bar {
-    width: 16px;
-    height: 1.5px;
-    margin: 1.5px 0;
+  width: 28px;
+  height: 2px;
+  margin: 3px 0;
   }
   
   .hero {
