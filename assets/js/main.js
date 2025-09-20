@@ -77,6 +77,10 @@ document.addEventListener('DOMContentLoaded', () => {
   
   console.log('✅ All content made visible on load');
   
+  // Initialize laser flow effect early
+  console.log('🚀 Initializing laser flow...');
+  initLaserFlow();
+  
   // Fix initial page load and scroll position
   window.scrollTo(0, 0);
   document.documentElement.style.scrollBehavior = 'auto';
@@ -614,15 +618,20 @@ document.addEventListener('DOMContentLoaded', () => {
   function checkThemePreference() {
     const savedTheme = localStorage.getItem('theme');
     const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    const themeSwitcher = document.querySelector('.theme-switcher');
     
     // Check saved preference or use system preference
     if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
       document.body.classList.add('dark-mode');
-      themeSwitcher.querySelector('i').classList.remove('fa-moon');
-      themeSwitcher.querySelector('i').classList.add('fa-sun');
+      if (themeSwitcher && themeSwitcher.querySelector('i')) {
+        themeSwitcher.querySelector('i').classList.remove('fa-moon');
+        themeSwitcher.querySelector('i').classList.add('fa-sun');
+      }
     } else {
-      themeSwitcher.querySelector('i').classList.remove('fa-sun');
-      themeSwitcher.querySelector('i').classList.add('fa-moon');
+      if (themeSwitcher && themeSwitcher.querySelector('i')) {
+        themeSwitcher.querySelector('i').classList.remove('fa-sun');
+        themeSwitcher.querySelector('i').classList.add('fa-moon');
+      }
     }
     
     // Apply specific dark mode styles
@@ -1154,6 +1163,156 @@ document.addEventListener('DOMContentLoaded', () => {
     
     console.log('✅ Page fully visible and loaded');
   });
+
+  // ===== Laser Flow Effect =====
+  function initLaserFlow() {
+    console.log('🔥 Starting laser flow initialization...');
+    const laserContainer = document.getElementById('laserFlow');
+    if (!laserContainer) {
+      console.error('❌ Laser container not found!');
+      return;
+    }
+    console.log('✅ Laser container found:', laserContainer);
+
+    let laserBeams = [];
+    let animationId;
+
+    function createLaserBeam() {
+      console.log('⚡ Creating laser beam...');
+      const beam = document.createElement('div');
+      beam.className = 'laser-beam';
+      
+      // Random positioning and properties
+      const startX = Math.random() * window.innerWidth;
+      const intensity = Math.random();
+      
+      console.log('📍 Beam position:', startX, 'Intensity:', intensity);
+      
+      // Add intensity classes
+      if (intensity > 0.7) {
+        beam.classList.add('intense');
+      } else if (intensity < 0.3) {
+        beam.classList.add('subtle');
+      }
+      
+      beam.style.left = startX + 'px';
+      beam.style.animationDelay = Math.random() * 3 + 's';
+      
+      // Create glow effects
+      const glow = document.createElement('div');
+      glow.className = 'laser-glow';
+      glow.style.left = (startX - 10) + 'px';
+      glow.style.top = Math.random() * window.innerHeight + 'px';
+      glow.style.animationDelay = Math.random() * 2 + 's';
+      
+      laserContainer.appendChild(beam);
+      laserContainer.appendChild(glow);
+      
+      console.log('✅ Laser beam and glow added to container');
+      
+      laserBeams.push({ beam, glow, x: startX });
+      
+      // Remove after animation
+      setTimeout(() => {
+        if (beam.parentNode) beam.remove();
+        if (glow.parentNode) glow.remove();
+        laserBeams = laserBeams.filter(item => item.beam !== beam);
+        console.log('🗑️ Laser beam cleaned up');
+      }, 8000);
+    }
+
+    function createMovingLaser() {
+      const beam = document.createElement('div');
+      beam.className = 'laser-beam moving';
+      beam.style.left = '-100px';
+      beam.style.animationDelay = Math.random() * 2 + 's';
+      
+      laserContainer.appendChild(beam);
+      
+      setTimeout(() => {
+        if (beam.parentNode) beam.remove();
+      }, 8000);
+    }
+
+    function spawnLasers() {
+      // Create static beam
+      if (Math.random() > 0.3) {
+        createLaserBeam();
+      }
+      
+      // Create moving beam less frequently
+      if (Math.random() > 0.8) {
+        createMovingLaser();
+      }
+      
+      // Schedule next spawn
+      setTimeout(spawnLasers, Math.random() * 3000 + 2000);
+    }
+
+    function handleResize() {
+      // Clear existing beams on resize
+      laserBeams.forEach(({ beam, glow }) => {
+        if (beam.parentNode) beam.remove();
+        if (glow.parentNode) glow.remove();
+      });
+      laserBeams = [];
+    }
+
+    function toggleLaserFlow(enable = true) {
+      if (enable) {
+        laserContainer.style.display = 'block';
+        spawnLasers();
+      } else {
+        laserContainer.style.display = 'none';
+        laserBeams.forEach(({ beam, glow }) => {
+          if (beam.parentNode) beam.remove();
+          if (glow.parentNode) glow.remove();
+        });
+        laserBeams = [];
+      }
+    }
+
+    // Initialize laser flow
+    window.addEventListener('resize', handleResize);
+    
+    // Create an immediate test beam to verify the effect is working
+    setTimeout(() => {
+      console.log('🧪 Creating test laser beam...');
+      createLaserBeam();
+      console.log('🔥 Test laser beam created');
+    }, 500);
+    
+    // Create another one after 2 seconds for visibility
+    setTimeout(() => {
+      console.log('🧪 Creating second test laser beam...');
+      createLaserBeam();
+    }, 2000);
+    
+    // Start laser flow after a short delay
+    setTimeout(() => {
+      toggleLaserFlow(true);
+    }, 1000);
+
+    // Expose controls globally for potential customization
+    window.laserFlow = {
+      toggle: toggleLaserFlow,
+      spawn: spawnLasers,
+      createBeam: createLaserBeam
+    };
+
+    // Add keyboard shortcut to manually trigger lasers (press 'L' key)
+    document.addEventListener('keydown', (e) => {
+      if (e.key.toLowerCase() === 'l') {
+        createLaserBeam();
+        console.log('🚀 Manual laser beam created!');
+      }
+    });
+
+    console.log('✨ Laser Flow initialized - Press L key to manually create lasers!');
+  }
+
+  // Initialize laser flow
+  initLaserFlow();
 
   // Removed: click-to-open live preview modal
 

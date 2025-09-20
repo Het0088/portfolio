@@ -19,6 +19,155 @@ body {
   letter-spacing: 0.02em;
 }
 
+/* ===== Laser Flow Effect ===== */
+.laser-flow-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  opacity: 1;
+}
+
+.laser-beam {
+  position: absolute;
+  width: 2px;
+  height: 100vh;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(147, 51, 234, 0.8) 20%,
+    rgba(236, 72, 153, 1) 50%,
+    rgba(147, 51, 234, 0.8) 80%,
+    transparent 100%
+  );
+  filter: blur(0.5px);
+  animation: laserPulse 3s ease-in-out infinite;
+}
+
+.laser-beam::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 255, 255, 0.9) 20%,
+    rgba(255, 255, 255, 1) 50%,
+    rgba(255, 255, 255, 0.9) 80%,
+    transparent 100%
+  );
+  transform: translateX(-50%);
+  filter: blur(0.2px);
+}
+
+.laser-beam::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 6px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(147, 51, 234, 0.3) 20%,
+    rgba(236, 72, 153, 0.4) 50%,
+    rgba(147, 51, 234, 0.3) 80%,
+    transparent 100%
+  );
+  transform: translateX(-50%);
+  filter: blur(2px);
+}
+
+.laser-glow {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(
+    circle,
+    rgba(236, 72, 153, 0.8) 0%,
+    rgba(147, 51, 234, 0.4) 40%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  filter: blur(1px);
+  animation: laserGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes laserPulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scaleX(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1.5);
+  }
+}
+
+@keyframes laserGlow {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+@keyframes laserMove {
+  0% {
+    transform: translateX(-100px);
+  }
+  100% {
+    transform: translateX(calc(100vw + 100px));
+  }
+}
+
+.laser-beam.moving {
+  animation: laserMove 8s linear infinite, laserPulse 3s ease-in-out infinite;
+}
+
+/* Laser intensity variants */
+.laser-beam.intense {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(147, 51, 234, 1) 20%,
+    rgba(236, 72, 153, 1.2) 50%,
+    rgba(147, 51, 234, 1) 80%,
+    transparent 100%
+  );
+  width: 3px;
+  filter: blur(0.3px);
+}
+
+.laser-beam.subtle {
+  opacity: 0.4;
+  width: 1px;
+  filter: blur(1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .laser-beam {
+    width: 1.5px;
+  }
+  
+  .laser-glow {
+    width: 15px;
+    height: 15px;
+  }
+}
+
 /* Ensure hero section is always visible */
 .hero {
   opacity: 1 !important;

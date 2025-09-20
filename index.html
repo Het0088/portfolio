@@ -15,27 +15,21 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- AOS Animation Library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-  
-  <!-- Lenis Smooth Scrolling -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1/bundled/lenis.css">
-  
-  <!-- Custom CSS -->
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/animations.css">
 </head>
 <body>
-  <!-- Header & Navigation -->
+  <div class="laser-flow-container" id="laserFlow">
+  </div>
   <header>
     <div class="container">
       <nav>
         <div class="logo">
           <a href="#hero">Het<span>.</span></a>
         </div>
-        
         <div class="nav-links">
           <a href="#hero">Home</a>
           <a href="#about">About</a>
@@ -43,12 +37,6 @@
           <a href="#projects">Projects</a>
           <a href="#contact">Contact</a>
         </div>
-        
-        <!-- <div class="right-nav">
-          <div class="theme-switcher">
-            <i class="fas fa-moon"></i>
-          </div> -->
-          
           <div class="mobile-menu-btn">
             <div class="bar"></div>
             <div class="bar"></div>
@@ -58,8 +46,6 @@
       </nav>
     </div>
   </header>
-  
-  <!-- Hero Section -->
   <section id="hero" class="hero parallax-element" data-parallax="0.3">
     <div class="container">
       <div class="hero-content stagger-animation animate" data-aos="fade-right">
@@ -157,6 +143,10 @@
               <p class="ts-logo">TS</p>
               <p>TypeScript</p>
             </div>
+            <div class="skill-item">
+              <i class="fab fa-react"></i>
+              <p>Next.js</p>
+            </div>
           </div>
         </div>
         
@@ -184,6 +174,37 @@
               <i class="fas fa-code"></i>
               <p>C++</p>
             </div>
+            <div class="skill-item">
+              <i class="fab fa-microsoft"></i>
+              <p>C#</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Frameworks -->
+        <div class="skill-category" data-aos="fade-up" data-aos-delay="150">
+          <h4>Frameworks & Libraries</h4>
+          <div class="skills-grid">
+            <div class="skill-item">
+              <i class="fab fa-python"></i>
+              <p>Django</p>
+            </div>
+            <div class="skill-item">
+              <i class="fab fa-python"></i>
+              <p>Flask</p>
+            </div>
+            <div class="skill-item">
+              <i class="fab fa-python"></i>
+              <p>FastAPI</p>
+            </div>
+            <div class="skill-item">
+              <i class="fab fa-laravel"></i>
+              <p>Laravel</p>
+            </div>
+            <div class="skill-item">
+              <i class="fab fa-microsoft"></i>
+              <p>.NET</p>
+            </div>
           </div>
         </div>
         
@@ -198,6 +219,21 @@
             <div class="skill-item">
               <i class="fas fa-database"></i>
               <p>MySQL</p>
+            </div>
+            <div class="skill-item">
+              <i class="fas fa-database"></i>
+              <p>NoSQL</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Tools & DevOps -->
+        <div class="skill-category" data-aos="fade-up" data-aos-delay="250">
+          <h4>Tools & DevOps</h4>
+          <div class="skills-grid">
+            <div class="skill-item">
+              <i class="fab fa-docker"></i>
+              <p>Docker</p>
             </div>
           </div>
         </div>
